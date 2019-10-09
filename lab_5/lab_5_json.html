@@ -11,7 +11,7 @@
     <div class="wrapper">
       <div class="header">Test JSON page</div>
       <!-- <button class="button" onclick="loadData()">Load Some JSON</button> -->
-      <button class="button" onclick="console.log('You haven\'t written a function yet!');">Click me to replace list entries</button>
+      <button class="button" onclick="benFunction();">Click me to replace list entries</button>
       <div class="content">
         <ul class="instructions">
           <li>Delete and re-clone the class repository</li>
@@ -278,7 +278,21 @@
       { "name": "Zambia", "code": "ZM" },
       { "name": "Zimbabwe", "code": "ZW" }
     ]
-    console.log("List of countries in the world", countries);
+    //console.log("List of countries in the world", countries);
+    sessionStorage.setItem("name", JSON.stringify(countries));
+   
+
+function benFunction(){
+    const countries = JSON.parse(sessionStorage.getItem("name"));
+    const countries_json= countries;
+
+    //Randomly delete the array to 50 items
+    while(countries_json.length > 50) {
+        let index = Math.floor(Math.random() * countries.length-1)
+        countries_json.splice(index,1)
+    }
+}
+
   </script>
 </body>
 
