@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Test AJAX page</title>
+  <link rel="stylesheet" type="text/css" href="./lab_styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="wrapper">
+      <div class="header">Test AJAX page</div>
+      <button class="button" onclick="loadData()">Load Some JSON</button>
+      <div class="content"></div>
+      <div class="footer"></div>
+    </div>
+  </div>
+  <script>
+
+    function randomItem(res) {
+      return res[Math.floor(Math.random() * res.length)]
+    }
+    function clickMe(res) {
+          let contents = document.querySelector(".content");
+          contents.innerHTML = '';
+
+          let orderlist = document.createElement("ol");
+
+          for (var i = 0; i < 15; i += 1) {
+            let list = randomItem(res)
+
+            let listitem = document.createElement("li");
+            listitem.innerText = list;
+            orderlist.append(listitem);
+          }    
+          contents.append(orderlist);
+          return contents;
+          }
+
+    function loadData() {
+      fetch('ajax_sample.json')
+        .then(res => res.json())
+        .then(res => res.map(c => c.name.concat(", ",c.code)))
+        .then(res => clickMe(res))
+     
+      
+
+        
+        
+        }
+  </script>
+
+</body>
+</html>
