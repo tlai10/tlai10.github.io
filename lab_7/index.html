@@ -1,0 +1,69 @@
+  <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Test AJAX page</title>
+  <link rel="stylesheet" type="text/css" href="./lab_styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="wrapper">
+      <div class="header">UMD Bus Routes</div>
+      <button class="button" onclick="loadData()">Load Some JSON</button>
+      <div class="content"></div>
+      <div class="footer"></div>
+    </div>
+  </div>
+  <script>
+    function loadData() {
+      fetch('https://api.umd.io/v0/bus/routes')
+        .then(res => res.json())
+        .then(res => res.map(c => c ))
+        .then(res => {
+          let unorderlist = document.createElement("ul");
+          let contents = document.querySelector(".content");
+          contents.innerHTML = '';
+
+
+          for (let i = 0; i < res.length; i++) {
+            let listitem = document.createElement("li");
+            let titles = res[i].title;
+            let bus_route = res[i].route_id;
+            let n = titles.indexOf(bus_route);
+            let modstring = titles;
+            console.log(bus_route);
+
+
+            if(n > -1) {
+              modstring = titles.substr(res[i].route_id.length, res[i].title.length);
+            }
+            titles = document.createTextNode(modstring);
+            routenum = document.createTextNode(bus_route);
+            listitem.append(routenum);
+            listitem.append(" ");
+            listitem.append(titles);
+            unorderlist.append(listitem);
+          }
+          contents.append(unorderlist);
+          return res;
+        })
+
+
+        .then(res => {
+          let found = res.find(function(element) {
+            return element.route_id == "127";
+          });
+          let headers = document.querySelector(".header");
+          for(let i = 0; i < res.length; i++) {
+            titles = document.createTextNode(res[i].title);
+            headers.innerHTML = "UMD Bus Routes " + found.title;
+          }
+          console.log(res);
+        })
+    }
+
+  </script>
+</body>
+
+</html>
